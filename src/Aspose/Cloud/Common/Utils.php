@@ -118,7 +118,7 @@ class Utils
             curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
 
         // Allow users to register curl options before the call is executed
-        $event = new ProcessCommandEvent();
+        $event = new ProcessCommandEvent($session);
         $dispatcher->dispatch(ProcessCommandEvent::PRE_CURL, $event);
 
         $result = curl_exec($session);
@@ -130,13 +130,14 @@ class Utils
                 throw new Exception($result);
             }
         }
-        curl_close($session);
 
         // Allow users to alter the result
-        $event = new ProcessCommandEvent($result);
+        $event = new ProcessCommandEvent($session, $result);
 
         /** @var ProcessCommandEvent $dispatchedEvent */
         $dispatchedEvent = $dispatcher->dispatch(ProcessCommandEvent::POST_CURL, $event);
+
+        curl_close($session);
 
         // TODO test or the Event result needs to be returned in case an listener was triggered
         return $dispatchedEvent->getResult();

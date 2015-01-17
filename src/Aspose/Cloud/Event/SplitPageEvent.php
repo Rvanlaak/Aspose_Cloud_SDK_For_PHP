@@ -9,7 +9,7 @@ class SplitPageEvent extends AbstractEvent
     /**
      * Will trigger when a specific page number is split and Utils::saveFile was completed
      */
-    const PAGE_IS_SPLIT = 'aspose.utils.page_is_split';
+    const PAGE_IS_SPLIT = 'aspose.sdk.page_is_split';
 
     /**
      * @var string with absolute path to file

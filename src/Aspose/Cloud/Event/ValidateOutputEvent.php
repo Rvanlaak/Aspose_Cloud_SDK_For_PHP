@@ -17,6 +17,7 @@ class ValidateOutputEvent extends AbstractEvent
      */
     private $invalid;
 
+
     function __construct($result, $invalid)
     {
         $this->result = $result;
