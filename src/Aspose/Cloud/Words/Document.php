@@ -7,6 +7,7 @@ namespace Aspose\Cloud\Words;
 use Aspose\Cloud\Common\AsposeApp;
 use Aspose\Cloud\Common\Utils;
 use Aspose\Cloud\Common\Product;
+use Aspose\Cloud\Event\SplitPageEvent;
 use Aspose\Cloud\Storage\Folder;
 use Aspose\Cloud\Exception\AsposeCloudException as Exception;
 
@@ -161,6 +162,8 @@ class Document {
         $json = json_decode($responseStream);
 
         if ($json->Code == 200) {
+
+            $dispatcher = AsposeApp::getEventDispatcher();
             foreach ($json->SplitResult->Pages as $splitPage) {
                 $splitFileName = basename($splitPage->Href);
 
@@ -169,9 +172,13 @@ class Document {
                 //sign URI
                 $signedURI = Utils::Sign($strURI);
                 $responseStream = Utils::processCommand($signedURI, "GET", "", "");
+
                 //save split slides
                 $outputFile = AsposeApp::$outPutLocation . $splitFileName;
                 Utils::saveFile($responseStream, $outputFile);
+
+                $event = new SplitPageEvent($outputFile);
+                $dispatcher->dispatch(SplitPageEvent::PAGE_IS_SPLIT, $event);
             }
         }
         else
