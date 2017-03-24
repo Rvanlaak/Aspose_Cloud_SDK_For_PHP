@@ -9,7 +9,7 @@ use Aspose\Cloud\Common\Utils;
 use Aspose\Cloud\Exception\AsposeCloudException as Exception;
 use Aspose\Cloud\Storage\Folder;
 
-class BarcodeReader
+class BarCodeReader
 {
 
     public $fileName = '';
