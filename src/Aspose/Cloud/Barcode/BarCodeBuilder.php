@@ -9,7 +9,7 @@ use Aspose\Cloud\Common\Product;
 use Aspose\Cloud\Common\Utils;
 use Aspose\Cloud\Exception\AsposeCloudException as Exception;
 
-class BarcodeBuilder
+class BarCodeBuilder
 {
 
     /**
